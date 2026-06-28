@@ -139,6 +139,69 @@ const { title, description = "Lucas Souza's Minimalist & Clean Developer Blog" }
     window.addEventListener('resize', handleResize);
     // Initialize state
     handleResize();
+
+    // Code block copy buttons initialization
+    let copyTimeoutId: number | undefined;
+
+    function setupCopyButtons() {
+      const codeBlocks = document.querySelectorAll('.post-content pre');
+      codeBlocks.forEach(block => {
+        // Skip if already initialized
+        if (block.parentElement?.classList.contains('code-block-wrapper')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        block.parentNode?.insertBefore(wrapper, block);
+        wrapper.appendChild(block);
+
+        const button = document.createElement('button');
+        button.className = 'copy-code-btn';
+        button.type = 'button';
+        button.innerText = 'Copy';
+        button.setAttribute('aria-label', 'Copy code block to clipboard');
+
+        wrapper.appendChild(button);
+
+        button.addEventListener('click', async () => {
+          const htmlBlock = block as HTMLElement;
+          const code = block.querySelector('code')?.innerText || htmlBlock.innerText || '';
+          
+          if (!navigator.clipboard) {
+            button.innerText = 'Not Supported';
+            setTimeout(() => {
+              button.innerText = 'Copy';
+            }, 2000);
+            return;
+          }
+
+          try {
+            await navigator.clipboard.writeText(code);
+            button.innerText = 'Copied!';
+            button.classList.add('copied');
+            
+            if (copyTimeoutId) {
+              window.clearTimeout(copyTimeoutId);
+            }
+
+            copyTimeoutId = window.setTimeout(() => {
+              button.innerText = 'Copy';
+              button.classList.remove('copied');
+              copyTimeoutId = undefined;
+            }, 2000);
+          } catch (err) {
+            console.error('Clipboard copy failed:', err);
+            button.innerText = 'Error';
+            setTimeout(() => {
+              button.innerText = 'Copy';
+            }, 2000);
+          }
+        });
+      });
+    }
+
+    setupCopyButtons();
+    // Run again when content dynamically changes or mounts
+    document.addEventListener('astro:page-load', setupCopyButtons);
   </script>
 </body>
 </html>
@@ -254,6 +317,60 @@ const { title, description = "Lucas Souza's Minimalist & Clean Developer Blog" }
     margin-left: var(--sidebar-width);
     padding: 60px var(--padding-desktop);
     max-width: calc(100% - var(--sidebar-width));
+  }
+
+  /* Code block copy utility container and button styles */
+  .main-content :global(.code-block-wrapper) {
+    position: relative;
+    margin: 32px 0;
+  }
+
+  .main-content :global(.code-block-wrapper pre) {
+    margin: 0 !important;
+  }
+
+  .main-content :global(.copy-code-btn) {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--surface);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--rounded-md);
+    padding: 6px 12px;
+    font-family: var(--font-sans), sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    opacity: 1; /* Visible by default on touch screens */
+    transition: opacity 200ms ease, background-color 200ms ease, color 200ms ease;
+    box-shadow: 0 2px 8px var(--shadow-tint);
+    z-index: 10;
+  }
+
+  /* Fade out copy button on devices supporting hover, revealing it only on wrapper hover */
+  @media (hover: hover) {
+    .main-content :global(.copy-code-btn) {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .main-content :global(.code-block-wrapper:hover .copy-code-btn) {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .main-content :global(.copy-code-btn:focus-visible) {
+    opacity: 1;
+    pointer-events: auto;
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .main-content :global(.copy-code-btn:hover) {
+    background-color: var(--divider);
+    color: var(--accent);
   }
 
   /* Desktop width responsive expansion rule (>1200px) */
