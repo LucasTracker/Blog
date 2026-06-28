@@ -78,15 +78,67 @@ const { title, description = "Lucas Souza's Minimalist & Clean Developer Blog" }
       document.body.appendChild(overlay);
     }
 
-    function toggleMenu() {
-      const isExpanded = trigger?.getAttribute('aria-expanded') === 'true';
-      trigger?.setAttribute('aria-expanded', (!isExpanded).toString());
-      drawer?.classList.toggle('is-open');
-      overlay?.classList.toggle('is-visible');
+    function toggleMenu(forceClose = false) {
+      const isOpen = drawer?.classList.contains('is-open');
+      const shouldClose = forceClose || isOpen;
+      
+      if (shouldClose) {
+        trigger?.setAttribute('aria-expanded', 'false');
+        drawer?.classList.remove('is-open');
+        overlay?.classList.remove('is-visible');
+        drawer?.setAttribute('aria-hidden', 'true');
+        // Prevent tab index leak natively on mobile when drawer is hidden
+        drawer?.setAttribute('inert', '');
+        // Restore focus to trigger for keyboard users
+        if (isOpen) {
+          (trigger as HTMLElement)?.focus();
+        }
+      } else {
+        trigger?.setAttribute('aria-expanded', 'true');
+        drawer?.classList.add('is-open');
+        overlay?.classList.add('is-visible');
+        drawer?.removeAttribute('aria-hidden');
+        drawer?.removeAttribute('inert');
+      }
     }
 
-    trigger?.addEventListener('click', toggleMenu);
-    overlay?.addEventListener('click', toggleMenu);
+    trigger?.addEventListener('click', () => toggleMenu());
+    overlay?.addEventListener('click', () => toggleMenu(true));
+
+    // Close drawer when clicking nav links on mobile
+    const navLinks = drawer?.querySelectorAll('.nav-link');
+    navLinks?.forEach(link => {
+      link.addEventListener('click', () => toggleMenu(true));
+    });
+
+    // Close drawer on pressing Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer?.classList.contains('is-open')) {
+        toggleMenu(true);
+      }
+    });
+
+    // Synchronize layout state on resize
+    function handleResize() {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        if (!drawer?.classList.contains('is-open')) {
+          drawer?.setAttribute('aria-hidden', 'true');
+          drawer?.setAttribute('inert', '');
+        }
+      } else {
+        drawer?.removeAttribute('aria-hidden');
+        drawer?.removeAttribute('inert');
+        // Clean up open states if resized to desktop
+        drawer?.classList.remove('is-open');
+        overlay?.classList.remove('is-visible');
+        trigger?.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    // Initialize state
+    handleResize();
   </script>
 </body>
 </html>
