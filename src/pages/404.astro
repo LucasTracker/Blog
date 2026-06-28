@@ -1,89 +1,65 @@
 ---
+import Layout from '../layouts/Layout.astro';
+
 // Must prerender in server output mode.
 export const prerender = true;
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Page Not Found — Lucas Souza</title>
-  <meta name="description" content="Sorry, this article doesn't exist anymore." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background-color: #faf9f6;
-      color: #121212;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .not-found {
-      text-align: center;
-      max-width: 480px;
-      padding: 40px 20px;
-    }
-
-    .error-code {
-      font-family: 'Playfair Display', Lora, Georgia, serif;
-      font-size: 96px;
-      font-weight: 700;
-      line-height: 1;
-      color: #e2e8f0;
-      margin-bottom: 24px;
-      display: block;
-    }
-
-    .not-found h1 {
-      font-family: 'Playfair Display', Lora, Georgia, serif;
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 1.3;
-      color: #121212;
-      margin-bottom: 16px;
-    }
-
-    .not-found p {
-      font-size: 16px;
-      color: #555555;
-      line-height: 1.6;
-      margin-bottom: 40px;
-    }
-
-    .btn-back {
-      display: inline-block;
-      background-color: #1e293b;
-      color: #ffffff;
-      font-family: 'Inter', system-ui, sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      text-decoration: none;
-      padding: 12px 28px;
-      border-radius: 9999px;
-      transition: background-color 200ms ease, transform 200ms ease;
-    }
-    .btn-back:hover {
-      background-color: #334155;
-      transform: translateY(-1px);
-    }
-  </style>
-</head>
-<body>
+<Layout title="Page Not Found" description="Sorry, the page you requested cannot be found.">
   <div class="not-found">
     <span class="error-code" aria-hidden="true">404</span>
-    <h1>Article not found</h1>
-    <p>Sorry, this article doesn't exist anymore.</p>
+    <h1>Page not found</h1>
+    <p>Sorry, the page you requested cannot be found.</p>
     <a href="/" class="btn-back">Back to Blog</a>
   </div>
-</body>
-</html>
+</Layout>
+
+<style>
+  .not-found {
+    text-align: center;
+    max-width: 480px;
+    margin: 80px auto;
+    padding: 40px 20px;
+  }
+
+  .error-code {
+    font-family: var(--font-serif);
+    font-size: 96px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--border);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .not-found h1 {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .not-found p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+  }
+
+  .btn-back {
+    display: inline-block;
+    background-color: var(--accent);
+    color: var(--on-accent);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: var(--rounded-full);
+    transition: background-color 200ms ease, transform 200ms ease;
+  }
+  .btn-back:hover {
+    background-color: #334155;
+    transform: translateY(-1px);
+  }
+</style>
+
+

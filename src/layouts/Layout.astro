@@ -1,0 +1,298 @@
+---
+import '../assets/index.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Lucas Souza's Minimalist & Clean Developer Blog" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Lucas Souza</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="layout-container">
+    {/* Mobile Header Bar */}
+    <header class="mobile-header" aria-label="Mobile Navigation Header">
+      <a href="/" class="mobile-logo">Lucas Souza</a>
+      <button class="mobile-menu-trigger" aria-label="Toggle Menu" aria-expanded="false" aria-controls="sidebar-drawer">
+        <span class="menu-icon" aria-hidden="true">☰</span>
+      </button>
+    </header>
+
+    {/* Sidebar navigation drawer */}
+    <aside class="sidebar-drawer" id="sidebar-drawer">
+      <div class="sidebar-content">
+        <div class="profile-card">
+          <div class="avatar-placeholder" aria-hidden="true">
+            <span>LS</span>
+          </div>
+          <h2 class="profile-name">Lucas Souza</h2>
+          <p class="profile-bio">AI Engineer & Tech Writer based in Brazil.</p>
+        </div>
+
+        <nav class="navigation-menu" aria-label="Main Navigation">
+          <ul class="nav-list">
+            <li><a href="/" class="nav-link">Blog</a></li>
+            <li><a href="/projects" class="nav-link">Projects</a></li>
+            <li><a href="/about" class="nav-link">About</a></li>
+          </ul>
+        </nav>
+
+        <footer class="sidebar-footer">
+          <div class="social-links" aria-label="Social Profiles">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub Profile">GH</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn Profile">LN</a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter/X Profile">TW</a>
+          </div>
+        </footer>
+      </div>
+    </aside>
+
+    {/* Main content body window */}
+    <main class="main-content">
+      <slot />
+    </main>
+  </div>
+
+  <script>
+    // Handle responsive mobile drawer interactions
+    const trigger = document.querySelector('.mobile-menu-trigger');
+    const drawer = document.querySelector('.sidebar-drawer');
+    
+    // Ensure only one overlay exists across transitions
+    let overlay = document.querySelector('.drawer-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'drawer-overlay';
+      document.body.appendChild(overlay);
+    }
+
+    function toggleMenu() {
+      const isExpanded = trigger?.getAttribute('aria-expanded') === 'true';
+      trigger?.setAttribute('aria-expanded', (!isExpanded).toString());
+      drawer?.classList.toggle('is-open');
+      overlay?.classList.toggle('is-visible');
+    }
+
+    trigger?.addEventListener('click', toggleMenu);
+    overlay?.addEventListener('click', toggleMenu);
+  </script>
+</body>
+</html>
+
+<style>
+  .layout-container {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .mobile-header {
+    display: none;
+  }
+
+  .sidebar-drawer {
+    width: var(--sidebar-width);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: var(--surface);
+    z-index: 100;
+  }
+
+  .sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--padding-desktop);
+  }
+
+  .profile-card {
+    margin-bottom: 40px;
+    text-align: left;
+  }
+
+  .avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--rounded-full);
+    background-color: var(--accent);
+    color: var(--on-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .profile-name {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .profile-bio {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .navigation-menu {
+    flex-grow: 1;
+  }
+
+  .sidebar-drawer {
+    visibility: visible;
+  }
+
+  .nav-list {
+    list-style: none;
+  }
+
+  .nav-list li {
+    margin-bottom: 12px;
+  }
+
+  .nav-link {
+    font-family: var(--font-sans),sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .nav-link:hover {
+    color: var(--accent);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 16px;
+  }
+
+  .social-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 200ms ease;
+  }
+
+  .social-link:hover {
+    color: var(--accent);
+  }
+
+  .main-content {
+    flex-grow: 1;
+    margin-left: var(--sidebar-width);
+    padding: 60px var(--padding-desktop);
+    max-width: calc(100% - var(--sidebar-width));
+  }
+
+  /* Desktop width responsive expansion rule (>1200px) */
+  @media (min-width: 1201px) {
+    .main-content {
+      padding-left: 80px;
+      padding-right: 80px;
+    }
+  }
+
+  /* Mobile/Tablet adaptive layout rule (<768px) */
+  @media (max-width: 768px) {
+    .layout-container {
+      flex-direction: column;
+    }
+
+    .mobile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      padding: 0 var(--padding-mobile);
+      border-bottom: 1px solid var(--border);
+      background-color: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .mobile-logo {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--on-background);
+      text-decoration: none;
+    }
+
+    .mobile-menu-trigger {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--on-background);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--rounded-md);
+      transition: background-color 200ms ease;
+    }
+
+    .mobile-menu-trigger:hover {
+      background-color: var(--divider);
+    }
+
+    .sidebar-drawer {
+      transform: translateX(-100%);
+      visibility: hidden;
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), visibility 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      width: 280px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    }
+
+    .sidebar-drawer.is-open {
+      transform: translateX(0);
+      visibility: visible;
+    }
+
+    :global(.drawer-overlay) {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 95;
+      transition: opacity 300ms ease;
+    }
+
+    :global(.drawer-overlay.is-visible) {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .main-content {
+      margin-left: 0;
+      max-width: 100%;
+      padding: 40px var(--padding-mobile);
+    }
+  }
+</style>
