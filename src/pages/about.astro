@@ -1,0 +1,154 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+
+// Technical skills tag list
+const skills = [
+  "AI Engineering", "Semantic Search", "Astro", "TypeScript", 
+  "Node.js", "Python", "Vector Databases", "MDX", "Git", "Keystatic"
+];
+---
+
+<Layout title="About" description="Learn more about Lucas Souza, AI Engineer and Technical Writer specializing in minimalist systems development.">
+  <div class="about-container">
+    <header class="page-header">
+      <h1 class="page-title">About Me</h1>
+      <p class="page-subtitle">AI Engineer & Tech Writer based in Brazil.</p>
+    </header>
+
+    <div class="about-content">
+      <section class="bio-section">
+        <h2 class="section-title">Biography</h2>
+        <p>
+          Hello! I'm Lucas Souza. I focus on developing clean, fast, and highly semantic web systems. My expertise bridges the gap between AI engineering workflows—such as prompt engineering, vector database construction, and semantic retrieval—and practical web development.
+        </p>
+        <p>
+          I build minimalist systems that prioritize core page performance, user experiences, and content structures. I write in-depth technical documentation and tutorials to help developers understand integration cycles and compiler structures.
+        </p>
+      </section>
+
+      <section class="skills-section">
+        <h2 class="section-title">Skills & Technologies</h2>
+        <div class="skills-cloud" aria-label="Technical skills cloud">
+          {skills.map((skill) => (
+            <span class="skill-tag">{skill}</span>
+          ))}
+        </div>
+      </section>
+
+      <section class="contact-section">
+        <h2 class="section-title">Connect</h2>
+        <p>
+          If you would like to discuss developer tools, content loader integrations, or project setups, feel free to reach out.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:lucas@example.com" class="contact-link">Email</a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="contact-link">GitHub</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact-link">LinkedIn</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .about-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+  }
+
+  .page-header {
+    margin-bottom: 48px;
+  }
+
+  .page-title {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .page-subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .section-title {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .bio-section p {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--on-surface);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .bio-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Skills cloud visual styling */
+  .skills-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .skill-tag {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: var(--rounded-full);
+    box-shadow: 0 2px 10px var(--shadow-tint);
+  }
+
+  .contact-section p {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .contact-link {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 200ms ease, border-color 200ms ease;
+  }
+
+  .contact-link:hover {
+    color: var(--text-primary);
+    border-color: var(--accent);
+  }
+
+  .contact-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: var(--rounded-sm);
+  }
+</style>

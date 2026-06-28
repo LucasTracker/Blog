@@ -1,0 +1,193 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+
+// Define project showcase data in English
+const projects = [
+  {
+    title: "AI Semantic Search Engine",
+    description: "A local semantic search utility powered by sentence-transformers, indexing markdown collections with instant vector lookups.",
+    tags: ["Astro", "Python", "Transformers", "Vector DB"],
+    repoLink: "https://github.com",
+    demoLink: "https://github.com",
+  },
+  {
+    title: "Agentic Markdown Parser",
+    description: "An automated compiler that parses workspace specifications into structured sprint task objects with compliance validations.",
+    tags: ["TypeScript", "Node.js", "Astro", "Zod"],
+    repoLink: "https://github.com",
+    demoLink: "https://github.com",
+  },
+  {
+    title: "Astro Keystatic Template",
+    description: "A pre-configured project boilerplate merging the Astro framework with local CMS Keystatic, optimized for zero-cost static hosting.",
+    tags: ["Astro", "React", "Keystatic", "CSS Variables"],
+    repoLink: "https://github.com",
+    demoLink: "https://github.com",
+  }
+];
+---
+
+<Layout title="Projects" description="Explore AI engineering tools, compiler projects, and developer utilities developed by Lucas Souza.">
+  <div class="projects-container">
+    <header class="page-header">
+      <h1 class="page-title">Projects</h1>
+      <p class="page-subtitle">A curated selection of technical projects, tools, and developer resources.</p>
+    </header>
+
+    <div class="projects-grid">
+      {projects.map((project) => (
+        <article class="project-card">
+          <div class="card-body">
+            <h2 class="project-title">{project.title}</h2>
+            <p class="project-description">{project.description}</p>
+            <div class="project-tags" aria-label="Technologies used">
+              {project.tags.map((tag) => (
+                <span class="tag-pill">{tag}</span>
+              ))}
+            </div>
+          </div>
+          <footer class="card-footer">
+            {project.repoLink && (
+              <a href={project.repoLink} target="_blank" rel="noopener noreferrer" class="footer-link" aria-label={`View source code for ${project.title}`}>
+                Repository
+              </a>
+            )}
+            {project.demoLink && (
+              <a href={project.demoLink} target="_blank" rel="noopener noreferrer" class="footer-link highlight" aria-label={`View live demo of ${project.title}`}>
+                Live Demo
+              </a>
+            )}
+          </footer>
+        </article>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .projects-container {
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    margin-bottom: 48px;
+  }
+
+  .page-title {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .page-subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+
+  /* Grid layout for project cards */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--gutter);
+  }
+
+  .project-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--rounded-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--shadow-tint);
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(30, 41, 59, 0.08);
+  }
+
+  .card-body {
+    padding: 28px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--on-background);
+    margin-bottom: 12px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .project-description {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .tag-pill {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: var(--rounded-full);
+  }
+
+  .card-footer {
+    padding: 20px 28px;
+    border-top: 1px solid var(--divider);
+    display: flex;
+    gap: 20px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .footer-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .footer-link:hover {
+    color: var(--accent);
+  }
+
+  .footer-link.highlight {
+    color: var(--accent);
+  }
+
+  .footer-link.highlight:hover {
+    color: #334155;
+  }
+
+  .footer-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: var(--rounded-sm);
+  }
+</style>
