@@ -1,0 +1,206 @@
+---
+// In Astro 7 with output: 'server', all pages default to SSR.
+// Explicitly prerender this page so it's served as static HTML
+// both locally (via Node adapter) and in production (static build).
+export const prerender = true;
+
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+// Fetch MDX posts collection safely
+const postsResult = await getCollection('posts');
+const posts = Array.isArray(postsResult) ? postsResult : [];
+
+// Sort posts descending by publication date safely (checking for invalid date bounds)
+const sortedPosts = posts.sort((a, b) => {
+  const dateA = a.data.publishedAt instanceof Date && !isNaN(a.data.publishedAt.getTime()) ? a.data.publishedAt.getTime() : 0;
+  const dateB = b.data.publishedAt instanceof Date && !isNaN(b.data.publishedAt.getTime()) ? b.data.publishedAt.getTime() : 0;
+  return dateB - dateA;
+});
+
+// Format date using UTC components to prevent off-by-one shifts safely
+function formatDate(date: any) {
+  if (!(date instanceof Date) || isNaN(date.getTime())) return '';
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+}
+---
+
+<Layout title="Home" description="Read the latest articles on AI engineering, systems development, and technology.">
+  <div class="home-container">
+    <header class="feed-header">
+      <h1 class="feed-title">Latest Articles</h1>
+      <p class="feed-subtitle">Thoughts, experiments, and technical deep-dives.</p>
+    </header>
+
+    {sortedPosts.length === 0 ? (
+      <div class="empty-feed">
+        <p>No articles found. Check back later!</p>
+      </div>
+    ) : (
+      <div class="posts-grid">
+        {sortedPosts.map((post) => (
+          <article class="post-card">
+            <a href={`/posts/${post.id}`} class="card-link" aria-label={`Read post: ${post.data.title}`}>
+              <div class="card-content">
+                <span class="card-category">Article</span>
+                <h2 class="card-title">{post.data.title}</h2>
+                <p class="card-description">{post.data.description}</p>
+              </div>
+              <footer class="card-footer">
+                <span class="card-date">{formatDate(post.data.publishedAt)}</span>
+                <span class="card-read-more">Read Post</span>
+              </footer>
+            </a>
+          </article>
+        ))}
+      </div>
+    )}
+  </div>
+</Layout>
+
+<style>
+  .home-container {
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+
+  .feed-header {
+    margin-bottom: 48px;
+  }
+
+  .feed-title {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .feed-subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+
+  .empty-feed {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--rounded-lg);
+    color: var(--text-secondary);
+  }
+
+  /* 3-Column responsive card grid */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--gutter);
+  }
+
+  .post-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--rounded-lg);
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--shadow-tint);
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(30, 41, 59, 0.08);
+  }
+
+  .card-link {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .card-content {
+    padding: 28px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-category {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .card-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--on-background);
+    margin-bottom: 12px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .card-description {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    /* Limit details snippet height */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .card-footer {
+    padding: 20px 28px;
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .card-date {
+    color: var(--text-muted);
+  }
+
+  .card-read-more {
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    transition: color 200ms ease;
+  }
+
+  .post-card:hover .card-read-more {
+    color: #334155;
+  }
+
+  .card-link:focus-visible {
+    outline: none;
+  }
+
+  .post-card:focus-within {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+</style>
