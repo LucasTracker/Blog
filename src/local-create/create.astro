@@ -1,0 +1,314 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Write a New Post">
+  <div class="create-page">
+    <h1 class="create-title">Write a New Post</h1>
+    <p class="create-subtitle">Compose your article below. The post will be saved as an MDX file in the content directory.</p>
+
+    <form id="create-post-form" class="create-form" novalidate>
+      <div class="form-group">
+        <label for="title" class="form-label">Title <span class="required">*</span></label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-input"
+          required
+          placeholder="My awesome article"
+          autocomplete="off"
+        />
+        <span class="form-error" id="title-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="form-label">Description <span class="required">*</span></label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          class="form-input"
+          required
+          placeholder="A brief description of your post"
+          autocomplete="off"
+        />
+        <span class="form-error" id="description-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="publishedAt" class="form-label">Published At <span class="required">*</span></label>
+        <input
+          type="date"
+          id="publishedAt"
+          name="publishedAt"
+          class="form-input"
+          required
+        />
+        <span class="form-error" id="publishedAt-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="content" class="form-label">Content <span class="required">*</span></label>
+        <textarea
+          id="content"
+          name="content"
+          class="form-textarea"
+          required
+          placeholder="Write your markdown content here..."
+          rows="16"
+        ></textarea>
+        <span class="form-error" id="content-error"></span>
+      </div>
+
+      <div id="form-message" class="form-message" hidden></div>
+
+      <button type="submit" id="submit-btn" class="submit-btn">
+        Publish Post
+      </button>
+    </form>
+  </div>
+</Layout>
+
+<style>
+  .create-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--padding-desktop) var(--gutter);
+  }
+
+  .create-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .create-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+  }
+
+  .required {
+    color: #dc2626;
+  }
+
+  .form-input,
+  .form-textarea {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--rounded-md);
+    padding: 0.65rem 0.85rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .form-input:focus,
+  .form-textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.08);
+  }
+
+  .form-input.has-error,
+  .form-textarea.has-error {
+    border-color: #dc2626;
+  }
+
+  .form-textarea {
+    min-height: 400px;
+    resize: vertical;
+    line-height: 1.7;
+  }
+
+  .form-error {
+    font-size: 0.8rem;
+    color: #dc2626;
+    min-height: 1.1em;
+  }
+
+  .form-message {
+    padding: 0.85rem 1rem;
+    border-radius: var(--rounded-md);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .form-message.success {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #166534;
+  }
+
+  .form-message.error {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+  }
+
+  .submit-btn {
+    background: var(--accent);
+    color: var(--on-accent);
+    border: none;
+    border-radius: var(--rounded-full);
+    padding: 0.75rem 2rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+    align-self: flex-start;
+  }
+
+  .submit-btn:hover {
+    opacity: 0.9;
+  }
+
+  .submit-btn:active {
+    transform: scale(0.98);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    .create-page {
+      padding: var(--padding-mobile);
+    }
+
+    .create-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  function initCreateForm() {
+    const form = document.getElementById('create-post-form') as HTMLFormElement | null;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+    const formMessage = document.getElementById('form-message') as HTMLDivElement | null;
+
+    if (!form || !submitBtn || !formMessage) return;
+
+    const getLocalYYYYMMDD = () => {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    };
+
+    // Set default date to today in local timezone
+    const dateInput = document.getElementById('publishedAt') as HTMLInputElement | null;
+    if (dateInput && !dateInput.value) {
+      dateInput.value = getLocalYYYYMMDD();
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Clear previous errors
+      clearErrors();
+      formMessage.hidden = true;
+
+      // Client-side validation
+      const title = (document.getElementById('title') as HTMLInputElement).value.trim();
+      const description = (document.getElementById('description') as HTMLInputElement).value.trim();
+      const publishedAt = (document.getElementById('publishedAt') as HTMLInputElement).value.trim();
+      const content = (document.getElementById('content') as HTMLTextAreaElement).value.trim();
+
+      let hasErrors = false;
+      if (!title) { showFieldError('title', 'Title is required'); hasErrors = true; }
+      if (!description) { showFieldError('description', 'Description is required'); hasErrors = true; }
+      if (!publishedAt) { showFieldError('publishedAt', 'Published date is required'); hasErrors = true; }
+      if (!content) { showFieldError('content', 'Content is required'); hasErrors = true; }
+
+      if (hasErrors) return;
+
+      // Disable button during submission
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Saving…';
+
+      try {
+        const formData = new FormData(form);
+        const response = await fetch('/api/create-post', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Escape the slug for safe HTML insertion
+          const safeSlug = escapeHtml(result.slug);
+          formMessage.innerHTML = `✅ Post created successfully! <a href="/posts/${safeSlug}" style="color: #166534; font-weight: 500;">View "${safeSlug}"</a>`;
+          formMessage.className = 'form-message success';
+          formMessage.hidden = false;
+          form.reset();
+          // Re-set today's date after reset
+          if (dateInput) {
+            dateInput.value = getLocalYYYYMMDD();
+          }
+        } else if (result.errors) {
+          // Show field-specific errors from server
+          for (const [field, message] of Object.entries(result.errors)) {
+            if (field === '_form') {
+              formMessage.textContent = message as string;
+              formMessage.className = 'form-message error';
+              formMessage.hidden = false;
+            } else {
+              showFieldError(field, message as string);
+            }
+          }
+        }
+      } catch (err) {
+        formMessage.textContent = 'An unexpected error occurred. Please try again.';
+        formMessage.className = 'form-message error';
+        formMessage.hidden = false;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Publish Post';
+      }
+    });
+  }
+
+  function showFieldError(field: string, message: string) {
+    const errorEl = document.getElementById(`${field}-error`);
+    const inputEl = document.getElementById(field);
+    if (errorEl) errorEl.textContent = message;
+    if (inputEl) inputEl.classList.add('has-error');
+  }
+
+  function clearErrors() {
+    document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+    document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+  }
+
+  function escapeHtml(text: string): string {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(text));
+    return div.innerHTML;
+  }
+
+  // Initialize on page load and on view-transition navigation
+  initCreateForm();
+  document.addEventListener('astro:page-load', initCreateForm);
+</script>

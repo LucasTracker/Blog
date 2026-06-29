@@ -1,0 +1,19 @@
+{"message":"Enabling sessions with filesystem storage","label":"@astrojs/node","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Generated 1ms","label":"types","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Syncing content","label":"content","level":"info"}
+{"message":"Astro config changed","label":"content","level":"info"}
+{"message":"Clearing content store","label":"content","level":"info"}
+{"message":"Synced content","label":"content","level":"info"}
+{"message":"Re-optimizing dependencies because vite config has changed","label":"vite","level":"info"}
+{"message":" astro  v7.0.3 ready in 3724 ms\n┃ Local    http://127.0.0.1:4321/","label":"SKIP_FORMAT","level":"info"}
+{"message":"watching for file changes...","label":null,"level":"info"}
+{"message":"[optimizer] bundling dependencies...","label":"vite","level":"info"}
+{"message":"[200] /create 83ms","label":null,"level":"info"}
+{"message":"[403] POST /api/create-post 1ms","label":null,"level":"info"}
+{"message":"[403] POST /api/create-post 1ms","label":null,"level":"info"}
+{"message":"[400] POST /api/create-post 7ms","label":null,"level":"info"}
+{"message":"[201] POST /api/create-post 8ms","label":null,"level":"info"}
+{"message":"Reloaded data from test-post-from-create-page/index.mdx","label":"glob-loader","level":"info"}
+{"message":"[409] POST /api/create-post 2ms","label":null,"level":"info"}
