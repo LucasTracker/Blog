@@ -32,7 +32,7 @@ const publishedDate = post.data.publishedAt instanceof Date
 
 <Layout title={post.data.title} description={post.data.description}>
   <div class="post-wrapper">
-    <a href={import.meta.env.BASE_URL} class="back-link">Back to Blog</a>
+    <a href={`${import.meta.env.BASE_URL}/`} class="back-link">Back to Blog</a>
 
     <header class="post-header">
       <h1 class="post-title">{post.data.title}</h1>
