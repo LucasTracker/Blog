@@ -32,7 +32,7 @@ jobs:
           version: 11.18.0
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-minimum-release-age
 
       - name: Build site
         env:
