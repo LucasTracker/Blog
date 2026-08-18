@@ -10,8 +10,10 @@ import localCreate from './src/integrations/local-create';
 const isCiBuild = process.env.GITHUB_ACTIONS === 'true';
 
 // https://astro.build/config
-export default defineConfig(
-  isCiBuild
+export default defineConfig({
+  site: 'https://lucastracker.github.io',
+  base: '/Blog',
+  ...(isCiBuild
     ? {
         // Production (GitHub Actions): static SSG output, no adapter needed.
         output: 'static',
@@ -23,5 +25,5 @@ export default defineConfig(
         output: 'server',
         adapter: node({ mode: 'standalone' }),
         integrations: [react(), mdx(), keystatic(), localCreate()],
-      }
-);
+      })
+});
