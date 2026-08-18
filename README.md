@@ -22,17 +22,17 @@ A clean, minimalist developer blog and portfolio built with Astro, Keystatic, an
 
 1. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. Run the development server:
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 3. Build for production:
    ```bash
-   npm run build
+   pnpm build
    ```
 
 ## Author
