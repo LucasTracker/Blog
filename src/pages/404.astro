@@ -10,7 +10,7 @@ export const prerender = true;
     <span class="error-code" aria-hidden="true">404</span>
     <h1>Page not found</h1>
     <p>Sorry, the page you requested cannot be found.</p>
-    <a href="/" class="btn-back">Back to Blog</a>
+    <a href={import.meta.env.BASE_URL} class="btn-back">Back to Blog</a>
   </div>
 </Layout>
 
