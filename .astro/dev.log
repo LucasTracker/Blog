@@ -7,13 +7,64 @@
 {"message":"Clearing content store","label":"content","level":"info"}
 {"message":"Synced content","label":"content","level":"info"}
 {"message":"Re-optimizing dependencies because vite config has changed","label":"vite","level":"info"}
-{"message":" astro  v7.0.3 ready in 3724 ms\n┃ Local    http://127.0.0.1:4321/","label":"SKIP_FORMAT","level":"info"}
+{"message":" astro  v7.2.2 ready in 6039 ms\n┃ Local    http://127.0.0.1:4321/Blog","label":"SKIP_FORMAT","level":"info"}
 {"message":"watching for file changes...","label":null,"level":"info"}
 {"message":"[optimizer] bundling dependencies...","label":"vite","level":"info"}
-{"message":"[200] /create 83ms","label":null,"level":"info"}
-{"message":"[403] POST /api/create-post 1ms","label":null,"level":"info"}
-{"message":"[403] POST /api/create-post 1ms","label":null,"level":"info"}
-{"message":"[400] POST /api/create-post 7ms","label":null,"level":"info"}
-{"message":"[201] POST /api/create-post 8ms","label":null,"level":"info"}
-{"message":"Reloaded data from test-post-from-create-page/index.mdx","label":"glob-loader","level":"info"}
-{"message":"[409] POST /api/create-post 2ms","label":null,"level":"info"}
+{"message":"[200] /keystatic/ 81ms","label":null,"level":"info"}
+{"message":"Configuration file updated. Restarting...","label":null,"level":"info"}
+{"message":"Enabling sessions with filesystem storage","label":"@astrojs/node","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"server restarted.","label":"vite","level":"info"}
+{"message":"[200] /keystatic 62ms","label":null,"level":"info"}
+{"message":"[200] /keystatic 4ms","label":null,"level":"info"}
+{"message":"[console.error] [astro-island] Error hydrating /node_modules/.pnpm/@keystatic+astro@5.1.0_@keystatic+core@0.5.50_@react-spectrum+provider@3.11.1_react-dom_676675628d862eba5fd5cbca5ca19133/node_modules/@keystatic/astro/internal/keystatic-page.js TypeError: Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.pnpm/@keystatic+astro@5.1.0_@keystatic+core@0.5.50_@react-spectrum+provider@3.11.1_react-dom_676675628d862eba5fd5cbca5ca19133/node_modules/@keystatic/astro/internal/keystatic-page.js?astro-retry=1787017438876","label":"vite","level":"error"}
+{"message":"[200] /keystatic 4ms","label":null,"level":"info"}
+{"message":"[console.error] [astro-island] Error hydrating /node_modules/.pnpm/@keystatic+astro@5.1.0_@keystatic+core@0.5.50_@react-spectrum+provider@3.11.1_react-dom_676675628d862eba5fd5cbca5ca19133/node_modules/@keystatic/astro/internal/keystatic-page.js TypeError: Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.pnpm/@keystatic+astro@5.1.0_@keystatic+core@0.5.50_@react-spectrum+provider@3.11.1_react-dom_676675628d862eba5fd5cbca5ca19133/node_modules/@keystatic/astro/internal/keystatic-page.js?astro-retry=1787017446773","label":"vite","level":"error"}
+{"message":"[200] /keystatic 10ms","label":null,"level":"info"}
+{"message":"[200] HEAD /create 21ms","label":null,"level":"info"}
+{"message":"Configuration file updated. Restarting...","label":null,"level":"info"}
+{"message":"Enabling sessions with filesystem storage","label":"@astrojs/node","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Re-optimizing dependencies because lockfile has changed","label":"vite","level":"info"}
+{"message":"server restarted.","label":"vite","level":"info"}
+{"message":"[optimizer] bundling dependencies...","label":"vite","level":"info"}
+{"message":"[200] /keystatic 141ms","label":null,"level":"info"}
+{"message":"[200] /api/keystatic/tree 575ms","label":null,"level":"info"}
+{"message":"Configuration file updated. Restarting...","label":null,"level":"info"}
+{"message":"Enabling sessions with filesystem storage","label":"@astrojs/node","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Re-optimizing dependencies because lockfile has changed","label":"vite","level":"info"}
+{"message":"server restarted.","label":"vite","level":"info"}
+{"message":"[optimizer] bundling dependencies...","label":"vite","level":"info"}
+{"message":"[200] /keystatic 178ms","label":null,"level":"info"}
+{"message":"[200] /api/keystatic/tree 605ms","label":null,"level":"info"}
+{"message":"[200] /keystatic 16ms","label":null,"level":"info"}
+{"message":"[200] /api/keystatic/tree 524ms","label":null,"level":"info"}
+{"message":"[console.error] An empty string (\"\") was passed to the href attribute. To fix this, either do not render the element at all or pass null to href instead of an empty string.","label":"vite","level":"error"}
+{"message":"[200] /api/keystatic/blob/e2d00aa591b4ca22622a1e39ad2ff66ea8feec96/src/content/posts/hello-world/index.mdx 10ms","label":null,"level":"info"}
+{"message":"[console.error] An empty string (\"\") was passed to the href attribute. To fix this, either do not render the element at all or pass null to href instead of an empty string.","label":"vite","level":"error"}
+{"message":"[console.error] An empty string (\"\") was passed to the href attribute. To fix this, either do not render the element at all or pass null to href instead of an empty string.","label":"vite","level":"error"}
+{"message":"[console.error] An empty string (\"\") was passed to the href attribute. To fix this, either do not render the element at all or pass null to href instead of an empty string.","label":"vite","level":"error"}
+{"message":"[console.error] An empty string (\"\") was passed to the href attribute. To fix this, either do not render the element at all or pass null to href instead of an empty string.","label":"vite","level":"error"}
+{"message":"[console.error] An empty string (\"\") was passed to the href attribute. To fix this, either do not render the element at all or pass null to href instead of an empty string.","label":"vite","level":"error"}
+{"message":"[200] /keystatic/collection/posts/create 21ms","label":null,"level":"info"}
+{"message":"[200] /keystatic/collection/posts/create 13ms","label":null,"level":"info"}
+{"message":"[200] /api/keystatic/tree 1311ms","label":null,"level":"info"}
+{"message":"Configuration file updated. Restarting...","label":null,"level":"info"}
+{"message":"Enabling sessions with filesystem storage","label":"@astrojs/node","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"[200] /keystatic/collection/posts 15ms","label":null,"level":"info"}
+{"message":"[200] /api/keystatic/tree 583ms","label":null,"level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Re-optimizing dependencies because lockfile has changed","label":"vite","level":"info"}
+{"message":"server restarted.","label":"vite","level":"info"}
+{"message":"[optimizer] bundling dependencies...","label":"vite","level":"info"}
+{"message":"[200] /keystatic/collection/posts 111ms","label":null,"level":"info"}
+{"message":"[200] /api/keystatic/tree 777ms","label":null,"level":"info"}
+{"message":"[200] /keystatic/collection/posts 5ms","label":null,"level":"info"}
+{"message":"[200] /api/keystatic/tree 480ms","label":null,"level":"info"}
+{"message":"[200] /keystatic/collection/posts 3ms","label":null,"level":"info"}
+{"message":"[200] /api/keystatic/tree 562ms","label":null,"level":"info"}
